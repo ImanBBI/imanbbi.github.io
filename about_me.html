@@ -1,0 +1,229 @@
+<!-- about_me.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>About Me - Iman Enayati</title>
+  <style>
+    body { font-family: Arial, Helvetica, sans-serif; line-height: 1.55; margin: 24px; max-width: 980px; }
+    header, section { margin-bottom: 28px; }
+    h1 { margin-bottom: 6px; }
+    .muted { color: #555; }
+    a { color: #0b57d0; }
+    figure { margin: 0; }
+    img { max-width: 100%; height: auto; }
+    .food-img { width: 520px; max-width: 100%; border-radius: 12px; display: block; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { border: 1px solid #ccc; padding: 10px; vertical-align: top; }
+    th { background: #f5f5f5; text-align: left; }
+    .cover { width: 110px; }
+    .cover img { width: 110px; border-radius: 6px; display: block; }
+    form { border: 1px solid #ccc; padding: 16px; border-radius: 12px; }
+    fieldset { border: none; padding: 0; margin: 0; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .full { grid-column: 1 / -1; }
+    label { font-weight: bold; display: block; margin-bottom: 4px; }
+    input, select { width: 100%; padding: 8px; box-sizing: border-box; }
+    button { padding: 10px 14px; cursor: pointer; }
+    footer { margin-top: 40px; border-top: 1px solid #e5e5e5; padding-top: 14px; }
+  </style>
+</head>
+
+<body>
+  <header>
+    <!-- Your name in an H1 tag -->
+    <h1>Iman Enayati</h1>
+    <p class="muted">A quick page with a few favorite things.</p>
+  </header>
+
+  <main>
+    <!-- Trip/getaway -->
+    <section aria-labelledby="trip">
+      <h2 id="trip">A Trip I Took Recently</h2>
+      <p>
+        In the past few years, I visited <strong>Banff</strong> and got to see <strong>Lake Louise</strong> in person.
+        I also went <strong>skiing</strong>, and it was one of those trips that makes you want to stay outside all day.
+        One of my favorite moments was spotting <strong>elk</strong>—it felt like the perfect “only in Banff” experience.
+      </p>
+    </section>
+
+    <!-- Pet names -->
+    <section aria-labelledby="pets">
+      <h2 id="pets">My Favorite Pet Names</h2>
+      <ul>
+        <li>A dog named <strong>Cody</strong></li>
+        <li>A cat named <strong>Luna</strong></li>
+        <li>A hamster named <strong>Nugget</strong></li>
+      </ul>
+    </section>
+
+    <!-- Favorite restaurant -->
+    <section aria-labelledby="restaurant">
+      <h2 id="restaurant">My Favorite Restaurant</h2>
+      <p>
+        My favorite restaurant is
+        <a href="https://www.in-n-out.com/" target="_blank" rel="noopener noreferrer">In-N-Out</a>.
+      </p>
+      <p>
+        It’s my favorite because the burgers are <strong>cheap</strong>, they <strong>taste really good</strong>,
+        and it’s a solid go-to when I want something fast and satisfying.
+      </p>
+      <p class="muted">
+        Side note: if a favorite restaurant doesn’t have a website, that could be a great opportunity to offer them your newfound web skills!
+      </p>
+    </section>
+
+    <!-- Favorite food + image -->
+    <section aria-labelledby="food">
+      <h2 id="food">My Favorite Food</h2>
+      <figure>
+        <!-- Image from the web -->
+        <img
+          class="food-img"
+          src="https://upload.wikimedia.org/wikipedia/commons/b/b0/Hamburger_%2812164386105%29.jpg"
+          alt="A hamburger with lettuce and tomato"
+        />
+        <figcaption>
+          <p>
+            My favorite food is <strong>hamburgers</strong>. I like them with a toasted bun, cheese,
+            and simple toppings like lettuce and tomato—plus a side of fries if I’m doing it right.
+            I’m also a fan of adding sauce and keeping it classic and messy.
+          </p>
+        </figcaption>
+      </figure>
+    </section>
+
+    <!-- Books table -->
+    <section aria-labelledby="books">
+      <h2 id="books">Four of My Favorite Books</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Book Name</th>
+            <th>Cover</th>
+            <th>Author</th>
+            <th>Summary</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>The Intelligent Investor</td>
+            <td class="cover">
+              <img
+                src="https://covers.openlibrary.org/b/id/14658010-L.jpg"
+                alt="Cover of The Intelligent Investor"
+              />
+            </td>
+            <td>Benjamin Graham</td>
+            <td>
+              Classic on value investing (intrinsic value, “margin of safety,” long-term discipline).
+              It’s still one of the most widely recommended investing books.
+            </td>
+          </tr>
+
+          <tr>
+            <td>A Random Walk Down Wall Street</td>
+            <td class="cover">
+              <img
+                src="https://covers.openlibrary.org/b/id/14859839-L.jpg"
+                alt="Cover of A Random Walk Down Wall Street"
+              />
+            </td>
+            <td>Burton G. Malkiel</td>
+            <td>
+              A popular guide to markets explaining why consistently beating the market is hard,
+              and how diversification + low-cost strategies can win over time.
+            </td>
+          </tr>
+
+          <tr>
+            <td>Sapiens: A Brief History of Humankind</td>
+            <td class="cover">
+              <img
+                src="https://covers.openlibrary.org/b/id/14369194-L.jpg"
+                alt="Cover of Sapiens: A Brief History of Humankind"
+              />
+            </td>
+            <td>Yuval Noah Harari</td>
+            <td>
+              Big-picture history of how humans built societies, economies, and belief systems—also a major bestseller
+              with huge readership.
+            </td>
+          </tr>
+
+          <tr>
+            <td>Thinking, Fast and Slow</td>
+            <td class="cover">
+              <img
+                src="https://covers.openlibrary.org/b/id/13775637-L.jpg"
+                alt="Cover of Thinking, Fast and Slow"
+              />
+            </td>
+            <td>Daniel Kahneman</td>
+            <td>
+              Explains how “fast” intuitive thinking and “slow” deliberate thinking shape our decisions,
+              and how common biases can lead us to predictable mistakes.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Guest book form -->
+    <section aria-labelledby="guestbook">
+      <h2 id="guestbook">Sign My Guest Book</h2>
+
+      <form action="#" method="post">
+        <fieldset>
+          <legend class="muted">Visitor Info</legend>
+
+          <div class="grid">
+            <div>
+              <label for="firstName">First Name</label>
+              <input id="firstName" name="firstName" type="text" required />
+            </div>
+
+            <div>
+              <label for="lastName">Last Name</label>
+              <input id="lastName" name="lastName" type="text" required />
+            </div>
+
+            <div class="full">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" required />
+            </div>
+
+            <div>
+              <label for="city">City</label>
+              <input id="city" name="city" type="text" />
+            </div>
+
+            <div>
+              <label for="state">State</label>
+              <select id="state" name="state" required>
+                <option value="">-- Select a state --</option>
+                <option value="CA">California</option>
+                <option value="NV">Nevada</option>
+                <option value="AZ">Arizona</option>
+                <option value="OR">Oregon</option>
+                <option value="WA">Washington</option>
+                <option value="UT">Utah</option>
+              </select>
+            </div>
+
+            <div class="full">
+              <button type="submit">Sign Guest Book</button>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p class="muted">Thanks for visiting!</p>
+  </footer>
+</body>
+</html>
