@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>JS Problem 4</title>
+</head>
+<body>
+  <h1>Problem 4</h1>
+  <div id="odds"></div>
+  <div id="sum"></div>
+
+  <script>
+    let startInput = prompt("Enter the start of the range (e.g., 2):") ?? "0";
+    let endInput   = prompt("Enter the end of the range (e.g., 20):") ?? "0";
+
+    let start = parseInt(startInput, 10);
+    let end   = parseInt(endInput, 10);
+
+    if (Number.isNaN(start)) start = 0;
+    if (Number.isNaN(end)) end = 0;
+
+    // Ensure start <= end (no loops needed for this)
+    if (start > end) {
+      const temp = start;
+      start = end;
+      end = temp;
+    }
+
+    let oddList = "";
+    let total = 0;
+
+    // ONLY ONE LOOP (required)
+    for (let i = start; i <= end; i++) {
+      total += i;
+
+      if (i % 2 !== 0) {
+        oddList += (oddList === "" ? "" : ", ") + i;
+      }
+    }
+
+    document.getElementById("odds").textContent =
+      (oddList === "")
+        ? `Odd numbers from ${start} through ${end}: (none)`
+        : `Odd numbers from ${start} through ${end}: ${oddList}`;
+
+    document.getElementById("sum").textContent =
+      `Sum of all numbers from ${start} through ${end}: ${total}`;
+  </script>
+</body>
+</html>
