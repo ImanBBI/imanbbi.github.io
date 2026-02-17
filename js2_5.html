@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JS Part 2 - Problem 5</title>
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 24px; line-height: 1.45; }
+    form { margin-top: 12px; }
+    label { display: inline-block; min-width: 88px; }
+    input[type="text"] { padding: 8px 10px; border: 1px solid #ccc; border-radius: 10px; }
+    .btnRow { margin-top: 12px; display: flex; gap: 10px; flex-wrap: wrap; }
+    input[type="button"] { padding: 8px 14px; border: 1px solid #ccc; border-radius: 10px; background: #fff; cursor: pointer; }
+    input[type="button"]:hover { background: #f6f6f6; }
+    #answer { margin-top: 14px; padding: 12px; border: 1px solid #ddd; border-radius: 10px; min-height: 24px; }
+    a { color: #0b5fff; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <h1>Problem 5</h1>
+
+  <form id="greetingForm" action="javascript:void(0);">
+    <div>
+      <label for="userName">Name:</label>
+      <input id="userName" type="text" autocomplete="name" placeholder="Enter your name" />
+    </div>
+
+    <div class="btnRow">
+      <input type="button" value="Hello" id="btnHello" />
+      <input type="button" value="Good Bye" id="btnGoodBye" />
+      <input type="button" value="Greetings" id="btnGreetings" />
+    </div>
+  </form>
+
+  <div id="answer"></div>
+
+  <p style="margin-top:16px;"><a href="index.html">← Back to index</a></p>
+
+  <script>
+    "use strict";
+
+    function speak() {
+      const input = document.getElementById("userName");
+      const name = (input.value || "").trim();
+
+      if (!name) {
+        alert("Please enter your name first.");
+        input.focus();
+        document.getElementById("answer").textContent = "No name entered yet.";
+        return;
+      }
+
+      const prefix = (this && typeof this.value === "string") ? this.value : "Hello";
+      const message = `${prefix} ${name}`;
+
+      alert(message);
+      document.getElementById("answer").textContent = message;
+    }
+
+    window.onload = function() {
+      document.getElementById("btnHello").onclick = speak;
+      document.getElementById("btnGoodBye").onclick = speak;
+      document.getElementById("btnGreetings").onclick = speak;
+    };
+  </script>
+</body>
+</html>

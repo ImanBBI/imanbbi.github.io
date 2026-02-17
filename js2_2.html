@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JS Part 2 - Problem 2</title>
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 24px; line-height: 1.45; }
+    #answer { margin-top: 12px; padding: 12px; border: 1px solid #ddd; border-radius: 10px; min-height: 24px; }
+    button { padding: 8px 12px; border-radius: 10px; border: 1px solid #ccc; background: #fff; cursor: pointer; }
+    button:hover { background: #f6f6f6; }
+    a { color: #0b5fff; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <h1>Problem 2</h1>
+
+  <button type="button" id="runBtn">Enter a sentence</button>
+  <div id="answer"></div>
+
+  <p style="margin-top:16px;"><a href="index.html">← Back to index</a></p>
+
+  <script>
+    "use strict";
+
+    function runWordCountPrompt() {
+      const sentence = prompt("Enter a sentence (words separated by spaces):", "The quick brown fox jumps");
+      const answerDiv = document.getElementById("answer");
+
+      if (sentence === null) {
+        answerDiv.textContent = "Prompt cancelled — no sentence entered.";
+        return;
+      }
+
+      // Requirement: use split to create an array of words.
+      // Robustness: collapse multiple spaces.
+      const words = sentence.trim().length === 0 ? [] : sentence.trim().split(/\s+/);
+      answerDiv.textContent = `Word count: ${words.length}`;
+    }
+
+    document.getElementById("runBtn").addEventListener("click", runWordCountPrompt);
+    runWordCountPrompt();
+  </script>
+</body>
+</html>

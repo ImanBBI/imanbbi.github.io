@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JS Part 2 - Problem 1</title>
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 24px; line-height: 1.45; }
+    code { background: #f4f4f4; padding: 2px 6px; border-radius: 6px; }
+    #answer { margin-top: 12px; padding: 12px; border: 1px solid #ddd; border-radius: 10px; }
+    a { color: #0b5fff; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <h1>Problem 1</h1>
+
+  <div id="answer"></div>
+
+  <p style="margin-top:16px;"><a href="index.html">← Back to index</a></p>
+
+  <script>
+    "use strict";
+
+    /**
+     * Count how many items in `numbers` are less than `threshold`.
+     * @param {number[]} numbers
+     * @param {number} threshold
+     * @returns {number}
+     */
+    function count(numbers, threshold) {
+      if (!Array.isArray(numbers)) {
+        throw new TypeError("count(numbers, threshold): numbers must be an array");
+      }
+      if (typeof threshold !== "number" || Number.isNaN(threshold)) {
+        throw new TypeError("count(numbers, threshold): threshold must be a valid number");
+      }
+
+      // Count only valid numeric entries (ignore non-number values gracefully)
+      return numbers.reduce((acc, n) => (typeof n === "number" && !Number.isNaN(n) && n < threshold ? acc + 1 : acc), 0);
+    }
+
+    /**
+     * Creates the array, calls count(), and displays the result in #answer.
+     * No parameters, no return value.
+     */
+    function testCount() {
+      const arr = [3, 55, 30, 28, 9, 12];
+      const value = 10;
+
+      const result = count(arr, value);
+      document.getElementById("answer").textContent =
+        `Array: ${arr.join(" ")} | Value: ${value} | Count < value: ${result}`;
+    }
+
+    testCount();
+  </script>
+</body>
+</html>

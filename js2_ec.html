@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JS Part 2 - Extra Credit</title>
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 24px; line-height: 1.45; }
+    .row { display: flex; align-items: flex-start; gap: 16px; flex-wrap: wrap; }
+    select { min-width: 220px; padding: 6px; border-radius: 10px; border: 1px solid #ccc; }
+    button { padding: 8px 12px; border-radius: 10px; border: 1px solid #ccc; background: #fff; cursor: pointer; }
+    button:hover { background: #f6f6f6; }
+    .panel { margin-top: 14px; border: 1px solid #ddd; border-radius: 12px; padding: 12px; max-width: 520px; }
+    .panelHeader { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    .help { color: #555; font-size: 0.95rem; margin: 8px 0 0; }
+    ol { margin: 10px 0 0; }
+    a { color: #0b5fff; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <h1>Problem 7 (Extra Credit: js2_ec.html)</h1>
+
+  <div class="row">
+    <div>
+      <select id="stateSelect" size="10" aria-label="State list"></select>
+      <div class="help">Tip: Click a state, then click “Add State”.</div>
+    </div>
+
+    <div>
+      <button type="button" id="addBtn">Add State</button>
+    </div>
+  </div>
+
+  <div class="panel" aria-live="polite">
+    <div class="panelHeader">
+      <strong>Selected States</strong>
+      <button type="button" id="clearBtn">Clear States</button>
+    </div>
+    <ol id="selectedStatesList"></ol>
+  </div>
+
+  <p style="margin-top:16px;"><a href="index.html">← Back to index</a></p>
+
+  <script>
+    "use strict";
+
+    const ORIGINAL_STATES = Object.freeze([
+      "Alabama", "Alaska", "Arizona", "California", "Colorado",
+      "Florida", "Georgia", "Hawaii", "Illinois", "New York",
+      "North Carolina", "Texas"
+    ]);
+
+    let availableStates = [...ORIGINAL_STATES];
+
+    function populateStates(selectEl, states) {
+      selectEl.innerHTML = "";
+      states.forEach((state, idx) => {
+        const opt = document.createElement("option");
+        opt.value = state;
+        opt.textContent = state;
+        if (idx === 0) opt.selected = true;
+        selectEl.appendChild(opt);
+      });
+    }
+
+    function getSelectedState(selectEl) {
+      const idx = selectEl.selectedIndex;
+      if (idx < 0) return null;
+      const opt = selectEl.options[idx];
+      return opt ? opt.value : null;
+    }
+
+    function removeStateFromSelect(selectEl, stateToRemove) {
+      availableStates = availableStates.filter(s => s !== stateToRemove);
+      populateStates(selectEl, availableStates);
+    }
+
+    function restoreSelect(selectEl) {
+      availableStates = [...ORIGINAL_STATES];
+      populateStates(selectEl, availableStates);
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      const selectEl = document.getElementById("stateSelect");
+      const selectedListEl = document.getElementById("selectedStatesList");
+      const addBtn = document.getElementById("addBtn");
+      const clearBtn = document.getElementById("clearBtn");
+
+      populateStates(selectEl, availableStates);
+
+      addBtn.addEventListener("click", () => {
+        const state = getSelectedState(selectEl);
+        if (!state) return;
+
+        const li = document.createElement("li");
+        li.textContent = state;
+        selectedListEl.appendChild(li);
+
+        removeStateFromSelect(selectEl, state);
+        addBtn.disabled = availableStates.length === 0;
+      });
+
+      clearBtn.addEventListener("click", () => {
+        selectedListEl.innerHTML = "";
+        restoreSelect(selectEl);
+        addBtn.disabled = false;
+      });
+    });
+  </script>
+</body>
+</html>
