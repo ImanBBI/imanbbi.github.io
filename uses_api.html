@@ -3,12 +3,259 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Redirecting…</title>
+  <title>Uses an API - Genderize.io</title>
+  <style>
+    :root { color-scheme: light; }
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      margin: 0;
+      background: #f6f7fb;
+      color: #111;
+    }
+    .wrap {
+      max-width: 860px;
+      margin: 40px auto;
+      padding: 0 16px;
+    }
+    header {
+      background: white;
+      border-radius: 14px;
+      padding: 20px 18px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+      margin-bottom: 16px;
+    }
+    header h1 { margin: 0 0 6px; font-size: 22px; }
+    header p { margin: 0; color: #444; line-height: 1.35; }
 
-  <link rel="canonical" href="uses_api.html" />
+    .card {
+      background: white;
+      border-radius: 14px;
+      padding: 18px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+      margin-bottom: 16px;
+    }
+
+    form {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr auto;
+      gap: 10px;
+      align-items: end;
+    }
+    label { display: block; font-size: 13px; color: #333; margin-bottom: 6px; }
+    input, select, button {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid #d9dbe7;
+      font-size: 15px;
+      background: white;
+    }
+    button {
+      cursor: pointer;
+      border: none;
+      background: #2f6fed;
+      color: white;
+      font-weight: 650;
+      padding: 11px 14px;
+      transition: transform 0.05s ease;
+      white-space: nowrap;
+    }
+    button:active { transform: translateY(1px); }
+    .hint { margin-top: 10px; color: #555; font-size: 13px; }
+
+    .status {
+      margin: 0;
+      font-size: 14px;
+      color: #333;
+    }
+
+    .results {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .metric {
+      border: 1px solid #eceef7;
+      border-radius: 12px;
+      padding: 14px;
+      background: #fbfbfe;
+    }
+    .metric .k { font-size: 12px; color: #555; margin-bottom: 6px; }
+    .metric .v { font-size: 18px; font-weight: 700; color: #111; }
+    .footnote {
+      margin-top: 12px;
+      font-size: 12.5px;
+      color: #555;
+      line-height: 1.4;
+    }
+
+    @media (max-width: 700px) {
+      form { grid-template-columns: 1fr; }
+      .results { grid-template-columns: 1fr; }
+      button { width: 100%; }
+    }
+  </style>
 </head>
 <body>
-  <p>Redirecting to <a href="uses_api.html">uses_api.html</a>…</p>
-</body>
+  <div class="wrap">
+    <header>
+      <h1>Gender Prediction (Uses an API)</h1>
+      <p>
+        This page calls the free <strong>Genderize.io</strong> API using <strong>fetch</strong>.
+        Enter a first name (required) and optionally a country to localize the prediction.
+      </p>
+    </header>
 
+    <section class="card">
+      <form id="apiForm">
+        <div>
+          <label for="nameInput">First name (required)</label>
+          <input id="nameInput" name="name" type="text" placeholder="e.g., Kim" required />
+        </div>
+
+        <div>
+          <label for="countrySelect">Country (optional)</label>
+          <select id="countrySelect" name="country_id">
+            <option value="">Global (no country_id)</option>
+            <option value="US">US</option>
+            <option value="CA">CA</option>
+            <option value="MX">MX</option>
+            <option value="GB">GB</option>
+            <option value="FR">FR</option>
+            <option value="DE">DE</option>
+            <option value="IN">IN</option>
+            <option value="JP">JP</option>
+            <option value="KR">KR</option>
+            <option value="BR">BR</option>
+            <option value="AU">AU</option>
+            <option value="DK">DK</option>
+          </select>
+        </div>
+
+        <div>
+          <button type="submit" id="submitBtn">Predict</button>
+        </div>
+      </form>
+
+      <p class="hint">
+        Tip: Try <strong>Kim</strong> with <strong>US</strong> vs <strong>DK</strong> to see how localization can change results.
+      </p>
+    </section>
+
+    <section class="card" aria-live="polite">
+      <p class="status" id="status">Enter a name and click Predict.</p>
+
+      <div class="results" id="results" hidden>
+        <div class="metric">
+          <div class="k">Name</div>
+          <div class="v" id="rName">—</div>
+        </div>
+
+        <div class="metric">
+          <div class="k">Predicted Gender</div>
+          <div class="v" id="rGender">—</div>
+        </div>
+
+        <div class="metric">
+          <div class="k">Confidence</div>
+          <div class="v" id="rProb">—</div>
+        </div>
+
+        <div class="metric">
+          <div class="k">Data Points Used</div>
+          <div class="v" id="rCount">—</div>
+        </div>
+
+        <div class="metric" id="countryMetric" hidden>
+          <div class="k">Country Scope</div>
+          <div class="v" id="rCountry">—</div>
+        </div>
+      </div>
+
+      <div class="footnote">
+        Note: This API returns a prediction based on statistics. If the dataset is small, the result may be less reliable.
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const form = document.getElementById('apiForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const statusEl = document.getElementById('status');
+
+    const resultsEl = document.getElementById('results');
+    const countryMetric = document.getElementById('countryMetric');
+
+    const rName = document.getElementById('rName');
+    const rGender = document.getElementById('rGender');
+    const rProb = document.getElementById('rProb');
+    const rCount = document.getElementById('rCount');
+    const rCountry = document.getElementById('rCountry');
+
+    function formatPercent(p) {
+      if (typeof p !== 'number') return '—';
+      return `${Math.round(p * 100)}%`;
+    }
+
+    function prettyGender(g) {
+      if (!g) return 'Unknown';
+      return g.charAt(0).toUpperCase() + g.slice(1);
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById('nameInput').value.trim();
+      const countryId = document.getElementById('countrySelect').value;
+
+      if (!name) {
+        statusEl.textContent = "Please enter a first name.";
+        resultsEl.hidden = true;
+        return;
+      }
+
+      const params = new URLSearchParams({ name });
+      if (countryId) params.set('country_id', countryId);
+
+      const url = `https://api.genderize.io?${params.toString()}`;
+
+      submitBtn.disabled = true;
+      statusEl.textContent = "Loading prediction...";
+      resultsEl.hidden = true;
+
+      try {
+        const resp = await fetch(url, { method: 'GET' });
+        const data = await resp.json().catch(() => ({}));
+
+        if (!resp.ok) {
+          const msg = (data && data.error) ? data.error : `Request failed (HTTP ${resp.status}).`;
+          throw new Error(msg);
+        }
+
+        rName.textContent = data.name ?? name;
+        rGender.textContent = prettyGender(data.gender);
+        rProb.textContent = formatPercent(data.probability);
+        rCount.textContent = (typeof data.count === 'number') ? data.count.toLocaleString() : '—';
+
+        if (countryId) {
+          countryMetric.hidden = false;
+          rCountry.textContent = countryId;
+        } else {
+          countryMetric.hidden = true;
+          rCountry.textContent = '—';
+        }
+
+        statusEl.textContent = "Done! Here’s the prediction:";
+        resultsEl.hidden = false;
+
+      } catch (err) {
+        statusEl.textContent = `Error: ${err.message}`;
+        resultsEl.hidden = true;
+      } finally {
+        submitBtn.disabled = false;
+      }
+    });
+  </script>
+</body>
 </html>
